@@ -1,5 +1,7 @@
 const express = require("express");
 const mongoose = require("mongoose");
+const postController = require("./post.controller");
+
 require("dotenv").config();
 // const router = require("./router");
 const path = require("path");
@@ -30,7 +32,7 @@ class App {
     this.app.use(express.json());
   }
   setRouter() {
-    // this.app.use(router);
+    this.app.use("/post", postController);
     this.app.get("/", (req, res) => {
       res.send("hello");
     });
