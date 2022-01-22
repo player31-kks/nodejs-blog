@@ -26,8 +26,8 @@ PostRouter.post("/", async (req, res) => {
 
 PostRouter.get("/", async (req, res) => {
   const posts = await PostService.find();
-
-  return res.send({ success: true, data: posts });
+  const localPosts = posts.map((post) => transformLocalDate(post));
+  return res.send({ success: true, data: localPosts });
 });
 
 PostRouter.get("/:postId", async (req, res) => {
