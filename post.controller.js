@@ -1,4 +1,5 @@
 const { Router } = require("express");
+const { transformLocalDate } = require("./util");
 
 const PostService = require("./post.service");
 const PostRouter = Router();
@@ -25,11 +26,15 @@ PostRouter.post("/", async (req, res) => {
 
 PostRouter.get("/", async (req, res) => {
   const posts = await PostService.find();
+
   return res.send({ success: true, data: posts });
 });
 
-PostRouter.get("/:postId", (req, res) => {
-  return res.send("get post");
+PostRouter.get("/:postId", async (req, res) => {
+  const { postId } = req.params;
+  const post = await PostService.findById(postId);
+  const localPost = transformLocalDate(post);
+  return res.send({ success: true, data: localPost });
 });
 
 PostRouter.put("/:postId", (req, res) => {
