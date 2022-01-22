@@ -1,7 +1,9 @@
 const { Router } = require("express");
-const { transformLocalDate } = require("./util");
 
 const PostService = require("./post.service");
+const mongoose = require("mongoose");
+const { ObjectId } = mongoose.Types;
+
 const PostRouter = Router();
 
 PostRouter.post("/", async (req, res) => {
@@ -26,19 +28,34 @@ PostRouter.post("/", async (req, res) => {
 
 PostRouter.get("/", async (req, res) => {
   const posts = await PostService.find();
-  const localPosts = posts.map((post) => transformLocalDate(post));
-  return res.send({ success: true, data: localPosts });
+  return res.send({ success: true, data: posts });
 });
 
 PostRouter.get("/:postId", async (req, res) => {
   const { postId } = req.params;
+  if (!ObjectId.isValid(postId)) {
+    return res.send({ success: false, msg: "postId is wrong" });
+  }
   const post = await PostService.findById(postId);
-  const localPost = transformLocalDate(post);
-  return res.send({ success: true, data: localPost });
+
+  return res.send({ success: true, data: post });
 });
 
-PostRouter.put("/:postId", (req, res) => {
-  return res.send("updated post");
+PostRouter.put("/:postId", async (req, res) => {
+  const { postId } = req.params;
+  const { password, title, content } = req.body;
+
+  if (!ObjectId.isValid(postId)) {
+    return res.send({ success: false, msg: "postId is wrong" });
+  }
+
+  const isCorrectedPw = await PostService.checkPassWord(postId, password);
+  if (!isCorrectedPw) {
+    return res.send({ success: false, msg: "password is wrong" });
+  }
+
+  await PostService.updateById(postId, { title, content });
+  return res.send({ success: true });
 });
 
 module.exports = PostRouter;
