@@ -17,7 +17,18 @@ PostRouter.post("/", vaildationMiddleWare(PostSchema), async (req, res) => {
 
 PostRouter.get("/", async (req, res) => {
   const posts = await PostService.find();
-  return res.send({ success: true, data: posts });
+  return res.render("posts", { posts });
+});
+
+PostRouter.get("/form", (req, res) => {
+  return res.render("form");
+});
+
+PostRouter.get("/:postId/updated", async (req, res) => {
+  const { postId } = req.params;
+
+  const post = await PostService.findById(postId);
+  return res.render("updatedPost", { post });
 });
 
 PostRouter.get("/:postId", async (req, res) => {
@@ -26,7 +37,7 @@ PostRouter.get("/:postId", async (req, res) => {
     return res.send({ success: false, msg: "postId is wrong" });
   }
   const post = await PostService.findById(postId);
-  return res.send({ success: true, data: post });
+  return res.render("post", { post });
 });
 
 PostRouter.put("/:postId", async (req, res) => {

@@ -18,7 +18,7 @@ class PostService {
   }
 
   async find() {
-    const posts = await Post.find({}).sort({ createdAt: "desc" });
+    const posts = await Post.find({}).select("-password").sort({ createdAt: "desc" });
     return posts.map((post) => transformLocalDate(post));
   }
 

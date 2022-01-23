@@ -1,6 +1,7 @@
 const express = require("express");
 const mongoose = require("mongoose");
 const postController = require("./post.controller");
+require("ejs");
 
 require("dotenv").config();
 const path = require("path");
@@ -9,6 +10,7 @@ class App {
   constructor() {
     this.app = express();
     this.setDB();
+    this.setEngine();
     this.setMiddleWare();
     this.setRouter();
     this.set404Error();
@@ -24,9 +26,14 @@ class App {
       .then(() => console.log("db connected"))
       .catch((err) => console.log(err));
   }
+
+  setEngine() {
+    this.app.set("view engine", "ejs");
+    this.app.set("views", "./views");
+  }
+
   setMiddleWare() {
-    this.app.use(express.static(path.join(__dirname, "uploads")));
-    this.app.use("/img", express.static(path.join(__dirname, "uploads")));
+    this.app.use("/static", express.static(path.join(__dirname, "static")));
     this.app.use(express.urlencoded({ extended: false }));
     this.app.use(express.json());
   }
