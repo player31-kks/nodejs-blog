@@ -3,7 +3,6 @@ const mongoose = require("mongoose");
 const postController = require("./post.controller");
 
 require("dotenv").config();
-// const router = require("./router");
 const path = require("path");
 
 class App {
