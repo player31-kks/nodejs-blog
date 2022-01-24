@@ -40,7 +40,7 @@ class App {
   setRouter() {
     this.app.use("/post", postController);
     this.app.get("/", (req, res) => {
-      res.send("hello");
+      return res.redirect("/post");
     });
   }
   set404Error() {

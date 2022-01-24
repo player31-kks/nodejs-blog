@@ -25,11 +25,11 @@
     <div class="container">
         <div class="mb-3">
             <label for="title" class="form-label">제목</label>
-            <input type="text" class="form-control" id="title" value=<%= post.title %>>
+            <input type="text" class="form-control" id="title" value="<%- post.title %>" >
         </div>
         <div class="mb-3">
             <label for="user" class="form-label">작성자</label>
-            <input type="text" class="form-control" id="user" value=<%= post.user %> readonly>
+            <input type="text" class="form-control" id="user" value="<%- post.user %>" readonly>
         </div>
         <div class="mb-3">
             <label for="password" class="form-label">비밀번호</label>
@@ -37,9 +37,9 @@
         </div>
         <div class="mb-3">
             <label for="content" class="form-label">글 내용</label>
-            <textarea class="form-control" id="content" rows="3"><%= post.title %></textarea>
+            <textarea class="form-control" id="content" rows="3"><%= post.content %></textarea>
         </div>
-        <button id="updatedBtn" type="button" class="btn btn-dark">글 수정하기</button>
+        <button data-id=<%= post._id %> id="updatedBtn" type="button" class="btn btn-dark">글 수정하기</button>
     </div>
 </body>
 </html>
