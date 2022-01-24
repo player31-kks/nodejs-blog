@@ -11,7 +11,6 @@ updatedBtn.addEventListener("click", () => {
     return;
   }
   const id = updatedBtn.dataset.id;
-  console.log(id);
   axios
     .put(`/post/${id}`, {
       title: title.value,
@@ -19,8 +18,12 @@ updatedBtn.addEventListener("click", () => {
       password: password.value,
       content: content.value,
     })
-    .then(() => {
-      console.log("success");
+    .then((response) => {
+      const { success, msg } = response.data;
+      if (success === false) {
+        alert(msg);
+        return;
+      }
       location.replace("/post");
     })
     .catch((error) => {

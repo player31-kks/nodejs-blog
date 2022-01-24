@@ -17,8 +17,12 @@ writePostBtn.addEventListener("click", () => {
       password: password.value,
       content: content.value,
     })
-    .then(() => {
-      console.log("success");
+    .then((response) => {
+      const { success, msg } = response.data;
+      if (success === false) {
+        alert(msg);
+        return;
+      }
       location.replace("/post");
     })
     .catch((error) => {
