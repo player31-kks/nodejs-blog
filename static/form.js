@@ -8,6 +8,7 @@ const content = document.querySelector("#content");
 writePostBtn.addEventListener("click", () => {
   if (!isRequired()) {
     alert("모든 항목을 채워주세요!!");
+    return;
   }
   axios
     .post("/post", {

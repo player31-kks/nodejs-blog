@@ -8,6 +8,7 @@ const content = document.querySelector("#content");
 updatedBtn.addEventListener("click", () => {
   if (!isRequired()) {
     alert("모든 항목을 채워주세요!!");
+    return;
   }
   const id = updatedBtn.dataset.id;
   console.log(id);
