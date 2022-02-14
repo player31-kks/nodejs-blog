@@ -1,8 +1,10 @@
 const { Router } = require("express");
 
 const PostService = require("./post.service");
+const CommentService = require("./comment.service");
 const mongoose = require("mongoose");
 const { PostSchema } = require("./post.model");
+const { CommentSchema } = require("./comment.model");
 const { ObjectId } = mongoose.Types;
 const vaildationMiddleWare = require("./vaildation");
 

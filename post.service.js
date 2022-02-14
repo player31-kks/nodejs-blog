@@ -1,5 +1,5 @@
 const { Post } = require("./post.model");
-const { transformLocalDate } = require("./util");
+const { transformLocalDateByMoment } = require("./util");
 
 class PostService {
   async create(input) {
@@ -9,7 +9,7 @@ class PostService {
 
   async findById(id) {
     const post = await Post.findById(id).select("-password");
-    return transformLocalDate(post);
+    return transformLocalDateByMoment(post);
   }
 
   async checkPassWord(id, password) {
@@ -19,7 +19,7 @@ class PostService {
 
   async find() {
     const posts = await Post.find({}).select("-password").sort({ createdAt: "desc" });
-    return posts.map((post) => transformLocalDate(post));
+    return posts.map((post) => transformLocalDateByMoment(post));
   }
 
   async updateById(postId, input) {

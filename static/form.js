@@ -5,29 +5,28 @@ const user = document.querySelector("#user");
 const password = document.querySelector("#password");
 const content = document.querySelector("#content");
 
-writePostBtn.addEventListener("click", () => {
+writePostBtn.addEventListener("click", async () => {
   if (!isRequired()) {
     alert("모든 항목을 채워주세요!!");
     return;
   }
-  axios
-    .post("/post", {
+  try {
+    const { data } = await axios.post("/post", {
       title: title.value,
       user: user.value,
       password: password.value,
       content: content.value,
-    })
-    .then((response) => {
-      const { success, msg } = response.data;
-      if (success === false) {
-        alert(msg);
-        return;
-      }
-      location.replace("/post");
-    })
-    .catch((error) => {
-      console.log(error);
     });
+
+    const { success, msg } = data;
+    if (!success) {
+      alert(msg);
+      return;
+    }
+    location.replace("/post");
+  } catch (e) {
+    console.error(e);
+  }
 });
 
 function isRequired() {
