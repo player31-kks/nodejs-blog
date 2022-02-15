@@ -1,6 +1,6 @@
 const express = require("express");
 const mongoose = require("mongoose");
-const postController = require("./post.controller");
+const postController = require("./src/controller/post.controller");
 require("ejs");
 
 require("dotenv").config();

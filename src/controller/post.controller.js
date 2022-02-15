@@ -1,10 +1,12 @@
 const { Router } = require("express");
 
-const PostService = require("./post.service");
+const PostService = require("../service/post.service");
+const CommentService = require("../service/comment.service");
 const mongoose = require("mongoose");
-const { PostSchema } = require("./post.model");
+const { PostSchema } = require("../model/post.model");
+const { CommentSchema } = require("../model/comment.model");
 const { ObjectId } = mongoose.Types;
-const vaildationMiddleWare = require("./vaildation");
+const vaildationMiddleWare = require("../../vaildation");
 
 const PostRouter = Router();
 
