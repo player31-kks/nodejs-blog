@@ -39,7 +39,9 @@ PostRouter.get("/:postId", async (req, res) => {
     return res.send({ success: false, msg: "postId is wrong" });
   }
   const post = await PostService.findById(postId);
-  return res.render("post", { post });
+  const comments = await CommentService.findByPostId(postId);
+
+  return res.render("post", { post, comments });
 });
 
 PostRouter.put("/:postId", async (req, res) => {
@@ -66,6 +68,18 @@ PostRouter.put("/:postId", async (req, res) => {
   }
 
   await PostService.updateById(postId, { title, content });
+  return res.send({ success: true });
+});
+
+PostRouter.delete("/:postId", async (req, res) => {
+  const { postId } = req.params;
+
+  if (!ObjectId.isValid(postId)) {
+    return res.send({ success: false, msg: "postId is wrong" });
+  }
+
+  await PostService.delete(postId);
+
   return res.send({ success: true });
 });
 
