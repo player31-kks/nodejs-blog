@@ -25,6 +25,10 @@ class PostService {
   async updateById(postId, input) {
     await Post.findByIdAndUpdate(postId, input);
   }
+
+  async delete(postId) {
+    await Post.deleteOne({ postId });
+  }
 }
 
 module.exports = new PostService();
