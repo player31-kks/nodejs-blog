@@ -1,6 +1,7 @@
 const express = require("express");
 const mongoose = require("mongoose");
 const postController = require("./src/controller/post.controller");
+const commentController = require("./src/controller/comment.controller");
 require("ejs");
 
 require("dotenv").config();
@@ -39,6 +40,7 @@ class App {
   }
   setRouter() {
     this.app.use("/post", postController);
+    this.app.use("/comment", commentController);
     this.app.get("/", (req, res) => {
       return res.redirect("/post");
     });

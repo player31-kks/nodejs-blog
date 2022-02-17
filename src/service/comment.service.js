@@ -1,15 +1,14 @@
 const { Comment } = require("../model/comment.model");
-const { transformLocalDateByMoment } = require("../../util");
 
 class CommentService {
-  async create(input) {
+  async save(input) {
     const comment = new Comment({ ...input });
-    return comment.save();
+    await comment.save();
+    return Comment.findById(comment._id);
   }
 
   async findByPostId(postId) {
-    const comment = await Comment.find({ postId }).select("-password").sort({ createdAt: "desc" });
-    return transformLocalDateByMoment(comment);
+    return Comment.find({ postId }).select("-password").sort({ createdAt: "desc" });
   }
 
   async checkPassWord(commentId, password) {
@@ -22,7 +21,7 @@ class CommentService {
   }
 
   async deleteById(commentId) {
-    await Comment.deleteById(commentId);
+    await Comment.deleteOne({ _id: commentId });
   }
 }
 

@@ -4,7 +4,6 @@ const PostService = require("../service/post.service");
 const CommentService = require("../service/comment.service");
 const mongoose = require("mongoose");
 const { PostSchema } = require("../model/post.model");
-const { CommentSchema } = require("../model/comment.model");
 const { ObjectId } = mongoose.Types;
 const vaildationMiddleWare = require("../../vaildation");
 
@@ -78,7 +77,7 @@ PostRouter.delete("/:postId", async (req, res) => {
     return res.send({ success: false, msg: "postId is wrong" });
   }
 
-  await PostService.delete(postId);
+  await PostService.deleteById(postId);
 
   return res.send({ success: true });
 });
